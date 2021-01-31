@@ -1,16 +1,28 @@
 import React from 'react';
 import { Card, CardActions, CardActionArea, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
+import useStyles from './styles';
 
-export const NewsCard = ({ article }) => {
+
+export const NewsCard = ({ article: { description, publishedAt, source, title, url, urlToImage }, i }) => {
+    const classes = useStyles();
+
     return (
-        <Card>
-            <CardActionArea>
-                <CardMedia />
-                <div>
-                    <Typography variant="body2" color="textSecondary" component="h2"></Typography>
-                    <Typography variant="body2" color="textSecondary" component="h2"></Typography>
+        <Card className={classes.card}>
+            <CardActionArea href={url} target="_blank">
+                <CardMedia className={classes.media} image={urlToImage || 'https://cdn3.iconfinder.com/data/icons/ballicons-reloaded-free/512/icon-70-512.png'} />
+                <div className={classes.details}>
+                    <Typography variant="body2" color="textSecondary" component="h2">{(new Date(publishedAt)).toDateString()}</Typography>
+                    <Typography variant="body2" color="textSecondary" component="h2">{source.name}</Typography>
                 </div>
             </CardActionArea>
+            <Typography className={classes.title} gutterBottom variant="h5" >{title}</Typography>
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">{description}</Typography>
+            </CardContent>
+            <CardActions className={classes.cardActions}>
+                <Button size="small" color="primary">Learn More</Button>
+                <Typography variant="h5" color="textSecondary" >{i+1}</Typography>
+            </CardActions>
         </Card>
     );
 };
